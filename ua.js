@@ -14,14 +14,13 @@ class UAJ {
 
     last (array ) { 
         if ( !Array.isArray(array) ) {
-            return { found:false };
+            return new Error("Not an array");
         }
-
         const len = array.length;
-        return { found: true, value: array[len-1] }; 
+        return array[len-1]; 
     }
 
-    eventListener (event, elemSelector, cb, parent = document, param, repeat = 0 ) {
+    eventLis (event, elemSelector, cb, parent = document, param, repeat = 0 ) {
         let counter = 0;
         parent.addEventListener(event, (event ) => {
             if(event.target.matches(elemSelector )) {
@@ -37,24 +36,28 @@ class UAJ {
     }
 
     qs (selector, parent = document) {
-        try {
-            const elem =  parent.querySelector(selector);
-            return {found:true, elem:elem};
-        }catch (e) {
-            return {found:false, err:e};
-        }
+        return parent.querySelector(selector);
     }
 
     qsa (selector, parent = document) {
-        try {
-            const elem = [...parent.querySelectorAll(selector)];
-            return {found: true, elem: elem};
-        } catch (e) {
-            return {found: false, err:e};
-        }
     }
 
+    byid (selector, parent = document) {
+        return parent.getElementById(selector);
+    }
     
+    bycls (selector, parent = document) {
+        return [...parent.getElementsByClassName(selector)];
+    }
+
+    byname (selector, parent = document) {
+        return [...parent.getElementsByName(selector)];
+    }
+
+    bytag (selector, parent = document) {
+        return [...parent.getElementsByTagName(selector)];
+    }
+
 }
 
 window.uaj =  new UAJ();
